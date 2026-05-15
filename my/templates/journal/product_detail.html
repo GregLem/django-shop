@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ product.name }}
+{% endblock %}
+
+{% load  static  %}
+
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/product_detail.css' %}">    
+{% endblock extra_css %}
+    
+
+{% block content %}
+    {% comment %} <h1>{{ product.name }}</h1> {% endcomment %}
+    <div class="product-detail">
+    <div class="gallery">
+            {% if product.image %}
+                <img class="img" 
+                    src="{{ product.image.url }}"
+                    alt="{{ product.name }}"
+                    
+                >
+            {% else %}
+                <div class="img">Изображение отсутствует</div>
+            {% endif %}
+        </div>
+        <div class="info">
+            <h1>{{ product.name }}</h1>
+            <div class="price"><strong>Цена: </strong>{{ product.price }}</div>
+            <div class="descr"><strong>Описание:</strong>{{ product.description }}</div>
+            <div class="meta">
+                <div><strong>Категория:</strong>{{ product.category.name }}</div>
+                <div><strong>Дата добавления:</strong>{{ product.created_at }}</div>
+            </div>
+        </div>
+    </div>
+        <div class="act">
+            <a href="{% url 'add_to_cart' product.id %}" class='button'>
+                Добавить в корзину
+            </a>
+            
+            <a href="{% url 'product_list' %}" class="backlink">Назад в Каталог</a>
+        </div>
+
+{% endblock  %}
+    
+    

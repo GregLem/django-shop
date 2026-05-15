@@ -1,0 +1,56 @@
+
+{# Расширяет базовый шаблон base.html #}
+{% extends 'base.html' %}
+
+{# Переопределяем заголовок страницы (то, что будет во вкладке браузера) #}
+{% block title %}
+    Каталог
+{% endblock title %}
+
+{# Загружаем тег static, чтобы можно было подключать свои CSS #}
+{% load static %}
+
+{# Переопределяем блок extra_css — сюда добавим стили только для этой страницы #}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/product_list.css' %}">
+{% endblock extra_css %}
+    
+{# Основной контент страницы #}
+{% block content %}
+        <h1>{{ title }}</h1>   {# Переменная title приходит из view #}
+
+        <h2>Категории</h2>
+        <ul>  
+            {% for category in categories %}
+                <li>{{ category.name }} ({{ category.product_count }} товаров)</li>
+            {% empty %}
+                <li>Нет категорий</li>
+            {% endfor %}        
+        </ul>
+        <h2>Товары</h2>
+        <ul class="cont">
+            {% for product in products %}
+                <div class="prod-card">
+                    <h3>{{ product.name }}</h3>
+                    <p class="price">{{ product.price }} рублей</p>
+                    <p>Категория: {{ product.category.name }}</p>
+                    
+                    {% if product.image %}
+                       <img class="blank img" src="{{ product.image.url }}" alt="{{ product.name }}" width="100" height="100">
+                    {% else %}
+                        <div class="blank">Нет картинки</div>   {# Заглушка, если нет изображения #}
+                    {% endif %}
+                    <p class='desc'>{{ product.description|truncatewords:20 }}</p>   {# Обрезаем описание #}
+                    <a href="{% url 'product_detail' product.id %}">
+                        Подробнее
+                    </a>
+                    <a href="{% url 'add_to_cart' product.id %}">
+                        <button>Добавить в корзину</button>   {# Обычная кнопка (можно заменить на <button class="btn">) #}
+                    </a>
+                </div>
+            {% empty %}
+                <p>Товаров пока нет</p>
+            {% endfor %}
+                
+        </ul>
+{% endblock content %}

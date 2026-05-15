@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'css/form_style.css' %}">
+</head>
+<body>
+    <h1>{{ title }}</h1>
+
+    
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}      
+        </ul>
+    {% endif %}
+    <form method="post" enctype='multipart/form-data'>
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">Сохранить</button>
+    </form>
+    <a href="{% url 'product_list' %}">Вернуться к списку</a>
+</body>
+</html>

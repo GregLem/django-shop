@@ -1,0 +1,153 @@
+/* ===========================================
+   СЕТКА (контейнер для карточек товаров)
+   =========================================== */
+.cont {
+  display: flex;
+  flex-wrap: wrap;          /* карточки переносятся, если не влезают */
+  justify-content: center;  /* центрируем карточки в строке */
+  gap: 20px;                /* расстояние между карточками */
+}
+
+/* ===========================================
+   КАРТОЧКА ТОВАРА
+   =========================================== */
+.prod-card {
+  /* Позиционирование (важно для раскрытия описания) */
+  position: relative;       /* чтобы .desc расположился внутри карточки */
+
+  /* Размеры и отступы */
+  width: 250px;
+  height: 350px;
+  padding: 15px;
+  margin: 10px;
+
+  /* Внешний вид */
+  border: 4px solid var(--color-secondary-dark);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  background: linear-gradient(45deg, var(--color-primary), var(--color-secondary-dark));
+  color: rgb(11, 8, 8);
+  font-size: 20px;
+
+  /* Внутреннее выравнивание */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* Обрезаем всё, что выходит за границы (меняется при наведении) */
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+/* При наведении карточка приподнимается и «отпускает» описание */
+.prod-card:hover {
+  overflow: visible;             /* теперь .desc может вылезти за пределы */
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ===========================================
+   ЗАГОЛОВОК ТОВАРА (h3)
+   =========================================== */
+.prod-card h3 {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 25px;
+  color: white;
+  height: 80px;                 /* фиксируем высоту, чтобы карточки были ровными */
+  display: flex;
+  align-items: center;          /* центрируем текст по вертикали */
+}
+
+/* ===========================================
+   ПАРАГРАФЫ В КАРТОЧКЕ
+   =========================================== */
+.prod-card p {
+  text-align: center;
+  font-weight: 900;
+}
+
+/* Цена */
+.price {
+  font-weight: 900;
+  font-size: 24px;
+  margin: 0.5rem 0;
+}
+
+/* ===========================================
+   КАРТИНКА ТОВАРА (или заглушка)
+   =========================================== */
+.img {
+  width: 80px;
+  aspect-ratio: 1 / 1;          /* делаем квадрат */
+  transition: var(--transition);
+  background: var(--color);     /* светлый фон для прозрачных изображений */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ===========================================
+   ОПИСАНИЕ (с раскрытием при наведении)
+   =========================================== */
+.desc {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;              /* прячем лишний текст */
+  text-overflow: ellipsis;       /* показываем многоточие */
+  white-space: nowrap;           /* текст в одну строку */
+  text-align: center;
+  transition: var(--transition);
+  cursor: default;               /* показываем обычную стрелку */
+}
+
+/* При наведении на описание – показываем полностью */
+.desc:hover {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 20;                  /* перекрываем остальные элементы карточки */
+
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--color-primary);   /* зелёный фон поверх всего */
+  color: white;                       /* белый текст для контраста */
+  white-space: normal;                /* разрешаем переносить слова */
+  text-overflow: clip;                /* убираем многоточие при раскрытии */
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* ===========================================
+   КНОПКА "Добавить в корзину" (класс .btn)
+   =========================================== */
+.btn {
+  display: inline-block;
+  background-color: var(--color-secondary);
+  color: #f9fafb;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 16px;
+  margin-top: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn:hover {
+  background-color: var(--color-secondary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
