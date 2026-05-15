@@ -1,0 +1,21 @@
+# Django
+__pycache__/
+*.pyc
+*.pyo
+db.sqlite3
+
+# Медиа
+media/
+
+# Виртуальное окружение
+django_env/
+venv/
+env/
+
+# Секреты
+.env
+*.env
+
+# Системные файлы
+.DS_Store
+Thumbs.db
